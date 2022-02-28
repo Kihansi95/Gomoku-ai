@@ -111,7 +111,6 @@ class GameRender(object):
         (i, j) = (None, None)
 
         # mouse click
-
         mouse_button = pygame.mouse.get_pressed()
 
         # left click

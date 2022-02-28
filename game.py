@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     #enable ai here
     enable_ai = True
-    enable_ai2 = True
+    enable_ai2 = False
 
     #edit if ai plays first
     ai.first_step()
@@ -45,8 +45,6 @@ if __name__ == '__main__':
             else:
                 render.change_state()
 
-        
-
         #pygame event, player vs. ai section
         for event in pygame.event.get():
             #exit
@@ -62,7 +60,6 @@ if __name__ == '__main__':
                 if result != BoardState.EMPTY:
                     break
                 if enable_ai:
-
                     ai.one_step()
                     result = gomoku.get_chess_result()
                 else:

@@ -33,26 +33,20 @@ class gomokuAI(object):
         for axis in directions:
             for (xdirection, ydirection) in axis:
 
-                if xdirection != 0 and (j + xdirection < 0 or j
-                        + xdirection >= N):
+                if xdirection != 0 and (j + xdirection < 0 or j + xdirection >= N):
                     break
-                if ydirection != 0 and (i + ydirection < 0 or i
-                        + ydirection >= N):
+                if ydirection != 0 and (i + ydirection < 0 or i + ydirection >= N):
                     break
-                if self.__gomoku.get_chessMap()[i + ydirection][j
-                        + xdirection] != BoardState.EMPTY:
+                if self.__gomoku.get_chessMap()[i + ydirection][j + xdirection] != BoardState.EMPTY:
                     return True
 
-                if xdirection != 0 and (j + xdirection * 2 < 0 or j
-                        + xdirection * 2 >= N):
+                if xdirection != 0 and (j + xdirection * 2 < 0 or j + xdirection * 2 >= N):
                     break
 
-                if ydirection != 0 and (i + ydirection * 2 < 0 or i
-                        + ydirection * 2 >= N):
+                if ydirection != 0 and (i + ydirection * 2 < 0 or i + ydirection * 2 >= N):
                     break
 
-                if self.__gomoku.get_chessMap()[i + ydirection * 2][j
-                        + xdirection * 2] != BoardState.EMPTY:
+                if self.__gomoku.get_chessMap()[i + ydirection * 2][j + xdirection * 2] != BoardState.EMPTY:
                     return True
 
         return False
@@ -98,14 +92,12 @@ class gomokuAI(object):
         """
         Checkmate means five in a row.
         """""
-        directions = [[(-1, 0), (1, 0)], [(0, -1), (0, 1)], [(-1, 1),
-                      (1, -1)], [(-1, -1), (1, 1)]]
+        directions = [[(-1, 0), (1, 0)], [(0, -1), (0, 1)], [(-1, 1), (1, -1)], [(-1, -1), (1, 1)]]
 
         for axis in directions:
             axis_count = 1
             for (xdirection, ydirection) in axis:
-                axis_count += self.direction_count(i, j, xdirection,
-                        ydirection, state)
+                axis_count += self.direction_count(i, j, xdirection, ydirection, state)
                 if axis_count >= 5:
                     return True
         return False
@@ -115,14 +107,12 @@ class gomokuAI(object):
         Check means a unblocked four.
         Double-three should also be a check, but it's not added yet.
         """""
-        directions = [[(-1, 0), (1, 0)], [(0, -1), (0, 1)], [(-1, 1),
-                      (1, -1)], [(-1, -1), (1, 1)]]
+        directions = [[(-1, 0), (1, 0)], [(0, -1), (0, 1)], [(-1, 1), (1, -1)], [(-1, -1), (1, 1)]]
 
         for axis in directions:
             currentPattern = []
             for (xdirection, ydirection) in axis:
-                currentPattern += self.direction_pattern(i, j,
-                        xdirection, ydirection, state)
+                currentPattern += self.direction_pattern(i, j, xdirection, ydirection, state)
                 if len(currentPattern) > 2:
                     currentPattern[1] = state
                 if enum_to_string(currentPattern) == WHITE_6PATTERNS[0]:
@@ -173,9 +163,9 @@ class gomokuAI(object):
         return False
 
     def generate(self):
-        '''
+        """
         Generate a list of available points for searching.
-        '''
+        """""
         frontierList = []
         for i in range(N):
             for j in range(N):
@@ -249,9 +239,9 @@ class gomokuAI(object):
         return board_score
 
     def evaluate_point(self, i, j):
-        '''
+        """
         Return a point score for Degree Heuristics.
-        '''
+        """
         vectors = []
         vectors.append(self.__gomoku.get_chessMap()[i])
         vectors.append([self.__gomoku.get_chessMap()[i][j] for i in range(N)])
@@ -263,14 +253,12 @@ class gomokuAI(object):
             vectors.append([self.__gomoku.get_chessMap()[x][x] for x in
                            range(N)])
         elif j < i:
-            v = [self.__gomoku.get_chessMap()[x + i - j][x] for x in
-                 range(0, N - i + j)]
+            v = [self.__gomoku.get_chessMap()[x + i - j][x] for x in range(0, N - i + j)]
             vectors.append(v)
 
         if i + j == N - 1:
             vectors.append([self.__gomoku.get_chessMap()[x][N - 1 - x] for x in range(N)])
         elif i + j < N - 1:
-
             v = [self.__gomoku.get_chessMap()[x][N - 1 - x - abs(i - j)] for x in range(N - abs(i - j))]
             vectors.append(v)
         elif i + j > N - 1:
@@ -308,6 +296,7 @@ class gomokuAI(object):
         return True
 
     def one_step(self):
+        
         for i in range(N):
             for j in range(N):
                 if self.__gomoku.get_chessMap()[i][j] != BoardState.EMPTY:
@@ -345,6 +334,5 @@ class gomokuAI(object):
                 self.__gomoku.set_chessboard_state(i, j, self.__currentState)
                 return True
         return False
-
 
 
